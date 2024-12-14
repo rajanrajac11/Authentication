@@ -7,15 +7,37 @@ function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   return (
     <div>
       <h1>Register</h1>
       <form action="">
-        <input type="text" placeholder="Enter name" />
+        <input
+          type="text"
+          placeholder="Enter name"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
         <br />
-        <input type="email" placeholder="Enter email" />
+        <input
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
         <br />
-        <input type="password" placeholder="Enter password" />
+        <input
+          type="password"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
         <br />
         <input type="submit" name="" id="" />
       </form>
