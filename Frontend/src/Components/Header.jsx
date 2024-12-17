@@ -28,7 +28,7 @@ function Header() {
             </Link>
           </div>
           <div>
-            <ul className="flex flex-wrap justify-between items-center gap-9 p-2 font-bold">
+            <ul className="flex  justify-between items-center gap-4 p-2 font-bold">
               {navItems.map((item, index) => (
                 <li key={index} className="bg-green-200 p-2 rounded-md ">
                   <Link to={item.path}>{item.name}</Link>
