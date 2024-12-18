@@ -10,7 +10,7 @@ import {
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Profile from "./pages/Profile.jsx";
-import Signin from "./pages/Signin.jsx";
+import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 
 const router = createBrowserRouter([
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/signin",
-        element: <Signin />,
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/signup",
