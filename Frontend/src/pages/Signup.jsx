@@ -1,10 +1,9 @@
 import React from "react";
-import SignupC from "../Components/Signup";
-
+import { Signup as SignupComponent } from "../Components/Index";
 function Signup() {
   return (
     <div>
-      <SignupC />
+      <SignupComponent />
     </div>
   );
 }

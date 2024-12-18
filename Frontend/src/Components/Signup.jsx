@@ -67,7 +67,7 @@ function Signup() {
         <div>
           Have an account?
           <span className="text-blue-700 underline">
-            <Link to="/signin">SignIn</Link>
+            <Link to="/login">SignIn</Link>
           </span>
         </div>
       </div>
