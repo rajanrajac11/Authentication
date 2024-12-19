@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "./Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [error, setError] = useState();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
 
-  const create = async (data) => {
-    try {
-      console.log("Hello");
-    } catch (error) {
-      setError(error.message);
-    }
+  const create = async (data, e) => {
+    e.preventDefault();
+    const res = fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    reset();
+
+    const dataGot = (await res).json();
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
   return (
     <div className="flex items-center justify-center p-10  ">
       <div className="mx-auto w-96 max-w-lg bg-gray-200 rounded-xl p-10 border border-gray-200 ">
@@ -24,18 +35,25 @@ function Signup() {
 
         {error && <p className="text-red-600  mt-8 text-center">{error}</p>}
 
-        <form onSubmit={handleSubmit(create)} className="mt-8">
+        <form
+          onSubmit={(e) => {
+            handleSubmit((data) => create(data, e))(e);
+          }}
+        >
           <div className="space-y-5">
             <Input
-              label="Full Name: "
-              placeholder="Enter your full name"
+              label="Username: "
+              id="username"
+              placeholder="Enter your name"
               className="w-full p-2 rounded-md text-md"
               {...register("name", {
                 required: true,
               })}
+              onChange={handleChange}
             />
             <Input
               label="Email: "
+              id="email"
               placeholder="Enter your email"
               type="email"
               className="w-full p-2 rounded-md text-md"
@@ -47,15 +65,18 @@ function Signup() {
                     "Email address must be a valid address",
                 },
               })}
+              onChange={handleChange}
             />
             <Input
               label="Password: "
+              id="password"
               type="password"
               placeholder="Enter your password"
               className="w-full p-2 rounded-md text-md"
               {...register("password", {
                 required: true,
               })}
+              onChange={handleChange}
             />
             <Input
               type="submit"
