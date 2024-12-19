@@ -1,7 +1,6 @@
 import { nanoid } from "nanoid";
 import React from "react";
-function Input({ label, type = "text", placeholder = "", ...props }, ref) {
-  const id = nanoid();
+function Input({ label, type = "text", placeholder = "", id, ...props }, ref) {
   return (
     <div>
       {label && (
