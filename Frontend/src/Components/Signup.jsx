@@ -4,23 +4,36 @@ import Input from "./Input";
 import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 
   const create = async (data, e) => {
     e.preventDefault();
-    const res = fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    reset();
+    try {
+      setLoading(true);
+      const res = fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      reset();
 
-    const dataGot = (await res).json();
+      const dataGot = await res.json();
+      console.log(dataGot);
+      setLoading(false);
+      if (dataGot.success === false) {
+        setError(true);
+        return;
+      }
+    } catch (error) {
+      setLoading(true);
+      setError(true);
+    }
   };
 
   const handleChange = (e) => {
@@ -80,7 +93,8 @@ function Signup() {
             />
             <Input
               type="submit"
-              value="Create Account"
+              disabled={loading}
+              value={loading ? "loading" : "Create Account"}
               className="cursor-pointer bg-slate-700 text-white p-2 rounded-xl hover:opacity-90"
             />
           </div>
@@ -90,6 +104,10 @@ function Signup() {
           <span className="text-blue-700 underline">
             <Link to="/login">SignIn</Link>
           </span>
+        </div>
+        <div className="text-red-500">
+          {" "}
+          {error && <p>Something went wrong!</p>}
         </div>
       </div>
     </div>
