@@ -14,7 +14,8 @@ function Signup() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = fetch("/api/auth/signup", {
+      setError(false);
+      const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "content-Type": "application/json",
@@ -31,12 +32,13 @@ function Signup() {
         return;
       }
     } catch (error) {
-      setLoading(true);
+      setLoading(false);
       setError(true);
     }
   };
 
   const handleChange = (e) => {
+    setError(false);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   return (
