@@ -12,8 +12,8 @@ const navItems = [
     path: "/about",
   },
   {
-    name: "Sign In",
-    path: "/signin",
+    name: "LogIn",
+    path: "/login",
   },
 ];
 
