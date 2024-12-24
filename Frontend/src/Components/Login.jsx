@@ -3,16 +3,32 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import { Link } from "react-router-dom";
 
-function Signin() {
+function Login() {
   const [error, setError] = useState();
   const { register, handleSubmit } = useForm();
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const login = async (data) => {
+  const login = async (data, e) => {
+    e.preventDefault();
     try {
-      console.log("Hello");
+      setLoading(true);
+      setError(false);
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
     } catch (error) {
-      setError(error.message);
+      setLoading(false);
+      setError(true);
     }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   return (
@@ -39,6 +55,7 @@ function Signin() {
                     "Email address must be a valid address",
                 },
               })}
+              onChange={handleChange}
             />
             <Input
               label="Password: "
@@ -48,6 +65,7 @@ function Signin() {
               {...register("password", {
                 required: true,
               })}
+              onChange={handleChange}
             />
             <Input
               type="submit"
@@ -57,7 +75,7 @@ function Signin() {
           </div>
         </form>
         <div>
-          Don't have an account?
+          Dont have an account?
           <span className="text-blue-700 underline">
             <Link to="/signup">Create an account</Link>
           </span>
@@ -67,4 +85,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default Login;
