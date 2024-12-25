@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "./Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [error, setError] = useState();
   const { register, handleSubmit } = useForm();
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const login = async (data, e) => {
     e.preventDefault();
@@ -21,6 +22,12 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
+      const dataGot = await res.json();
+      if (dataGot.success == false) {
+        setError(true);
+        return;
+      }
+      navigate("/");
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -44,6 +51,7 @@ function Login() {
           <div className="space-y-5">
             <Input
               label="Email: "
+              id="email"
               placeholder="Enter your email"
               type="email"
               className="w-full p-2 rounded-md text-md"
@@ -60,6 +68,7 @@ function Login() {
             <Input
               label="Password: "
               type="password"
+              id="password"
               placeholder="Enter your password"
               className="w-full p-2 rounded-md text-md"
               {...register("password", {
