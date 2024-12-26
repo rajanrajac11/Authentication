@@ -25,12 +25,12 @@ function Signup() {
       reset();
 
       const dataGot = await res.json();
-      console.log(dataGot);
       setLoading(false);
       if (dataGot.success === false) {
         setError(true);
         return;
       }
+      navigate("login");
     } catch (error) {
       setLoading(false);
       setError(true);

@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginFailure, loginStart, loginSuccess } from "../store/userSlice";
 
 function Login() {
-  const [error, setError] = useState();
   const { register, handleSubmit } = useForm();
+
+  const { loading, error } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const login = async (data, e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(loginStart());
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -23,14 +25,14 @@ function Login() {
         body: JSON.stringify(formData),
       });
       const dataGot = await res.json();
+      dispatch(loginSuccess(dataGot));
       if (dataGot.success == false) {
-        setError(true);
+        dispatch(loginFailure(error));
         return;
       }
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      dispatch(loginFailure(error));
     }
   };
 
@@ -78,8 +80,9 @@ function Login() {
             />
             <Input
               type="submit"
-              value="Login"
-              className="cursor-pointer bg-slate-700 text-white p-2 rounded-xl hover:opacity-90 w-16"
+              disabled={loading}
+              value={loading ? "Loading..." : "Login"}
+              className="cursor-pointer bg-slate-700 text-white p-2 rounded-xl hover:opacity-90 w-20"
             />
           </div>
         </form>
