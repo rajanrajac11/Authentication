@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 import express from "express";
 import dotenv from "dotenv";
-import router from "./routes/auth.route.js";
+import authRouter from "./routes/auth.route.js";
 
 const app = express();
 app.use(express.json());
 
 dotenv.config();
-app.use("/api/auth", router);
+app.use("/api/auth/", authRouter);
 
 const port = process.env.PORT || 3000;
 mongoose
@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   return res.status(statusCode).json({
     success: false,
-    message: error,
+    message,
     statusCode,
   });
 });

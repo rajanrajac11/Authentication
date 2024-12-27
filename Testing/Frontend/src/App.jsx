@@ -1,11 +1,12 @@
-import { useState } from "react";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./Components/Header";
 
-import "./App.css";
-
-function App() {
+function App({ children }) {
   return (
     <>
-      <h1>Hello guys welcome to my youtube channel</h1>
+      <Header />
+      <Outlet />
     </>
   );
 }
