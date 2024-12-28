@@ -14,6 +14,7 @@ import Profile from "./pages/Profile.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import { store } from "./store/store.js";
+import persist from "redux-persist/es/persistStore.js";
 
 const router = createBrowserRouter([
   {
@@ -46,8 +47,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
+    <PersistGate persistor={persist} loading={null}>
+      <StrictMode>
+        <RouterProvider router={router} />
+      </StrictMode>
+    </PersistGate>
   </Provider>
 );
