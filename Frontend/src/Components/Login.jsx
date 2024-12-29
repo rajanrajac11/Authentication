@@ -8,7 +8,9 @@ import { loginFailure, loginStart, loginSuccess } from "../store/userSlice";
 function Login() {
   const { register, handleSubmit } = useForm();
 
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector(
+    (state) => state.persistedReducer.user
+  );
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();

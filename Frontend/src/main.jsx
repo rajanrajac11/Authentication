@@ -14,7 +14,8 @@ import Profile from "./pages/Profile.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import { store } from "./store/store.js";
-import persist from "redux-persist/es/persistStore.js";
+import { persist } from "./store/store.js";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
