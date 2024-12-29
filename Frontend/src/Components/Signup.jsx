@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Input from "./Input";
+import { Input, OAuth } from "./Index";
 import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
@@ -93,15 +93,16 @@ function Signup() {
               })}
               onChange={handleChange}
             />
+            <OAuth />
             <Input
               type="submit"
               disabled={loading}
               value={loading ? "loading" : "Create Account"}
-              className="cursor-pointer bg-slate-700 text-white p-2 rounded-xl hover:opacity-90"
+              className="cursor-pointer bg-slate-700 text-white p-2 rounded-xl hover:opacity-90 w-full"
             />
           </div>
         </form>
-        <div>
+        <div className="mt-5">
           Have an account?
           <span className="text-blue-700 underline">
             <Link to="/login">SignIn</Link>
