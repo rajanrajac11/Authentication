@@ -57,9 +57,7 @@ export const google = async (req, res, next) => {
       const newUser = await User.create({
         email: req.body.email,
         password: hashedPassword,
-        username:
-          req.body.name.split(" ").join("").toLowerCase() +
-          Math.floor(Math.random * 10000).toString(),
+        username: req.body.name.split(" ").join("").toLowerCase(),
         profilePicture: req.body.photo,
       });
 
