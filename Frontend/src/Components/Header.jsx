@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const navItems = [
   {
@@ -11,13 +12,11 @@ const navItems = [
     name: "About",
     path: "/about",
   },
-  {
-    name: "LogIn",
-    path: "/login",
-  },
 ];
 
 function Header() {
+  const { currentUser } = useSelector((state) => state.persistedReducer.user);
+  console.log(currentUser.profilePicture);
   return (
     <>
       <div className="p-1 bg-slate-500">
@@ -34,6 +33,19 @@ function Header() {
                   <Link to={item.path}>{item.name}</Link>
                 </li>
               ))}
+              {currentUser ? (
+                <Link to={"/profile"}>
+                  <img
+                    src={currentUser.profilePicture}
+                    alt="Profile Picture"
+                    className="h-12 rounded-full object-cover"
+                  />
+                </Link>
+              ) : (
+                <li className="bg-green-200 p-2 rounded-md ">
+                  <button>Login</button>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
