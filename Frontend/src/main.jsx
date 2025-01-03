@@ -10,7 +10,7 @@ import {
 import { Provider } from "react-redux";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
-import Profile from "./pages/Profile.jsx";
+import Profile from "./Components/Profile.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import { store } from "./store/store.js";
@@ -41,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
