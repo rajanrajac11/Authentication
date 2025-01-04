@@ -16,7 +16,6 @@ const navItems = [
 
 function Header() {
   const { currentUser } = useSelector((state) => state.persistedReducer.user);
-  console.log(currentUser.profilePicture);
   return (
     <>
       <div className="p-1 bg-slate-500">
@@ -43,7 +42,9 @@ function Header() {
                 </Link>
               ) : (
                 <li className="bg-green-200 p-2 rounded-md ">
-                  <button>Login</button>
+                  <Link to={"/login"}>
+                    <button>Login</button>
+                  </Link>
                 </li>
               )}
             </ul>
