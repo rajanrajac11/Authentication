@@ -7,8 +7,8 @@ import {
   updateUserFailure,
   updateUserSuccess,
 } from "../store/userSlice";
+const token = localStorage.getItem("authToken");
 
-const submit = () => {};
 function Profile() {
   const { currentUser } = useSelector((state) => state.persistedReducer.user);
   const navigate = useNavigate();
@@ -20,21 +20,31 @@ function Profile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await fetch("/api/auth/update", {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-    } catch (error) {}
+      if (data.success === false) {
+        dispatch(updateUserFailure(data));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+    } catch (error) {
+      dispatch(updateUserFailure());
+    }
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
-      <form action="" className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <img
           src={currentUser.profilePicture}
           alt="Profile Picture "
