@@ -8,9 +8,9 @@ import { loginFailure, loginStart, loginSuccess } from "../store/userSlice";
 function Login() {
   const { register, handleSubmit } = useForm();
 
-  const { loading, error } = useSelector(
-    (state) => state.persistedReducer.user
-  );
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,6 +18,8 @@ function Login() {
   const login = async (data, e) => {
     e.preventDefault();
     try {
+      setLoading(true);
+      setError(false);
       dispatch(loginStart());
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -27,12 +29,13 @@ function Login() {
         body: JSON.stringify(formData),
       });
       const dataGot = await res.json();
+      setLoading(false);
       if (dataGot.success === false) {
         dispatch(loginFailure(dataGot.message));
         return;
       }
-      dispatch(loginSuccess(dataGot));
       navigate("/");
+      dispatch(loginSuccess(dataGot));
     } catch (error) {
       console.log(error);
       dispatch(loginFailure(dataGot.message));
