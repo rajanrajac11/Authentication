@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input, OAuth } from "./Index";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../store/userSlice";
 
 function Login() {
+  const { currentUser } = useSelector((state) => state.persistedReducer.user);
+  useEffect(() => {
+    currentUser ? navigate("/") : null;
+  });
   const { register, handleSubmit } = useForm();
 
   const [error, setError] = useState(false);

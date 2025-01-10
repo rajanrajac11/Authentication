@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input, OAuth } from "./Index";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Signup() {
+  const { currentUser } = useSelector((state) => state.persistedReducer.user);
+  useEffect(() => {
+    currentUser ? navigate("/") : null;
+  });
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset } = useForm();
