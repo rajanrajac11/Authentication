@@ -6,6 +6,7 @@ import {
   updateUserStart,
   updateUserFailure,
   updateUserSuccess,
+  signout,
 } from "../store/userSlice";
 const token = localStorage.getItem("authToken");
 
@@ -18,6 +19,16 @@ function Profile() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  const handleSignout = async () => {
+    try {
+      await fetch("/api/user/signout");
+      dispatch(signout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,8 +89,15 @@ function Profile() {
           Update
         </button>
         <div className="flex justify-between mt-5">
-          <span className="text-red-500 cursor-pointer">Delete Account</span>
-          <span className="text-red-500 cursor-pointer">SignOut</span>
+          <button className="text-red-500 cursor-pointer">
+            Delete Account
+          </button>
+          <button
+            className="text-red-500 cursor-pointer"
+            onClick={handleSignout}
+          >
+            SignOut
+          </button>
         </div>
       </form>
     </div>
