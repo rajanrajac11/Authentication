@@ -22,7 +22,7 @@ function Profile() {
 
   const handleSignout = async () => {
     try {
-      await fetch("/api/user/signout");
+      await fetch("/api/auth/signout");
       dispatch(signout());
     } catch (error) {
       console.log(error);
@@ -92,14 +92,14 @@ function Profile() {
           <button className="text-red-500 cursor-pointer">
             Delete Account
           </button>
-          <button
-            className="text-red-500 cursor-pointer"
-            onClick={handleSignout}
-          >
-            SignOut
-          </button>
         </div>
       </form>
+      <button
+        className="text-white cursor-pointer p-1 bg-red-500  rounded-xl m-2"
+        onClick={handleSignout}
+      >
+        SignOut
+      </button>
     </div>
   );
 }
